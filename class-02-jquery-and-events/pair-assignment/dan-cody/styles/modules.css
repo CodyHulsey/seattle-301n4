@@ -2,6 +2,7 @@
 
 .site-header {
   padding: .1em;
+  background-color: #ecf0f1;
 }
 
 .main-nav {
@@ -11,6 +12,8 @@
 }
 
 .main-nav li {
+  text-decoration: none;
+  list-style: none;
   margin-right: .4em;
   font-size: 1.5em;
   padding: .5em .2em;
@@ -21,11 +24,13 @@
     Use the full width, and remove the list bullet. */
 
 #filters {
+  list-style: none;
   padding: 0;
 }
 
 #filters select {
-
+  width: 100%;
+  margin-top: 1em;
 }
 
 .template {
