@@ -1,0 +1,36 @@
+body {
+  line-height: 1.5;
+  font-size: 100%;
+  color: #2c3e50;
+}
+
+hr {
+  margin: 1em;
+  width: 80%;
+}
+
+/*TEXT STYLES
+=======================================*/
+p {
+  font-size: 1em;
+}
+
+address {
+  display: inline-block;
+}
+
+/*LINK STYLES
+=======================================*/
+
+a, a:link, a:active {
+  color: #c0392b;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: #e74c3c;
+}
+
+a:visited {
+  color: #d35400;
+}

@@ -7,6 +7,8 @@ function Article (opts) {
     this.publishedOn = opts.publishedOn;
     this.body = opts.body;
     this.author = opts.author;
+
+    //constructor takes one argument - opts, basically translating the blog article objects into the constructor. Iterating over each one.
 }
 
 Article.prototype.toHtml = function() {
@@ -36,16 +38,17 @@ Article.prototype.toHtml = function() {
     $newArticle.removeClass('template');
 
     return $newArticle;
+    //we are returning it here
 }
-
+//rawData.sort sorts stuff. It's giving you some flexibility on how you want something sorted. A callback is a function as an argument. It's expecting two parameters. We are just doing math. We are comparing the two. .sort is an interation tool. .sort is just an array method.
 rawData.sort(function(a,b) {
     return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
 });
-
+//Another array method that has another call back. For the length of this array, do something with this element. articles.push pushes that object into the articles array.
 rawData.forEach(function(ele) {
     articles.push(new Article(ele));
 })
-
+//for every new article object, we are runnning an append method.
 articles.forEach(function(a){
     $('#articles').append(a.toHtml())
 });
