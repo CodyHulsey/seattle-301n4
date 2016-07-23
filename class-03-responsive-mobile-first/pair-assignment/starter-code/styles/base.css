@@ -36,3 +36,10 @@ a:hover, a:focus {
 
 a:visited {
 }
+
+/*IMAGE STYLES
+=========================================*/
+
+img {
+  max-width: 75%;
+}

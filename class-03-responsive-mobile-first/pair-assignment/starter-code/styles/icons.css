@@ -40,8 +40,6 @@
 }
 .icon-menu:before {
 	content: "\e902";
-	float: left;
-	font-size: 5em;
 }
 .icon-link:before {
 	content: "\e903";
