@@ -82,7 +82,7 @@ articleView.handleMainNav = function() {
     $('.tab-content').hide();
 
     $('#' + $(this).data('content')).show();
-    
+
   });
 
   $('.main-nav .tab:first').click(); // Let's now trigger a click on the first .tab element, to set up the page.
@@ -96,9 +96,9 @@ articleView.setTeasers = function() {
   //       "Read On" link once it has been clicked. Be sure to prevent the default link-click action!
   //       Ideally, we'd attach this as just 1 event handler on the #articles section, and let it
   //       process any .read-on clicks that happen within child nodes.
-  
+
   $('article').on('click', '.read-on', function (e) {
-    $(this).siblings('.article-body *:nth-of-type(n+2)').show();
+    $(this).siblings().show();
     $(this).hide();
     e.stopPropagation();
     e.preventDefault();
