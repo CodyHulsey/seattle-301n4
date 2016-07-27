@@ -22,6 +22,13 @@
         <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
+    <script id="filter" type="text/x-handlebars-template">
+      <li>
+        <select id="{{id}}">
+          <option value="">{{defaultVal}}</option>
+        </select>
+      </li>
+    </script>
   </head>
   <body>
     <header class="site-header clearfix">
@@ -44,18 +51,7 @@
     <main>
       <section id="articles" class="tab-content">
         <div>
-          <ul id="filters">
-            <li>
-              <select id="author-filter">
-                <option value="">-- Filter by Authors --</option>
-              </select>
-            </li>
-            <li>
-              <select id="category-filter">
-                <option value="">-- Filter by Categories --</option>
-              </select>
-            </li>
-          </ul>
+          <ul id="filters"></ul>
         </div>
       </section>
       <section id="about" class="tab-content">
@@ -77,7 +73,6 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- TODO: Include Handlebars.JS from a CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
     <script src="scripts/blogArticles.js"></script>
     <script src="scripts/article.js"></script>

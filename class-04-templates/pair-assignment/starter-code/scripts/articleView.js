@@ -2,6 +2,20 @@
 var articleView = {};
 
 articleView.populateFilters = function() {
+  var templateScript = $('#filter').html();
+  
+  var theTemplate = Handlebars.compile(templateScript);
+  
+  var filters = [{
+    id:'author-filter',
+    defaultVal:'-- Filter by Authors --'},
+    { id:'category-filter',
+    defaultVal:'-- Filter by Categories --' }];
+  
+  filters.forEach(function(filter) {
+    $('#filters').append(theTemplate(filter));
+  });
+  
   $('article').each(function() {
     if (!$(this).hasClass('template')) {
       var val = $(this).find('address a').text();
