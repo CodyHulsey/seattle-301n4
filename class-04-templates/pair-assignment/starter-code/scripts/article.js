@@ -23,6 +23,7 @@ Article.prototype.toHtml = function() {
   this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
 
   return theTemplate(this);
+  
 };
 
 rawData.sort(function(a,b) {
