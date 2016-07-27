@@ -33,20 +33,11 @@ articleView.handleAuthorFilter = function() {
 
         $('article').hide();
 
-        $('article').each(function() {
-          if ($(this).data('author') === $author) {
-            $(this).fadeIn();
-          }
-        });
+        $('article[data-author=\"'+ $author +'\"]').fadeIn();
     } else {
         $('article').hide();
-        $('article').each(function() {
-        if (!$(this).hasClass('template')) {
-          $(this).fadeIn();
-        }
-        });
+        $('article').not('.template').fadeIn();
     }
-
     $('#category-filter').val('');
   });
 };
@@ -58,20 +49,11 @@ articleView.handleCategoryFilter = function() {
 
         $('article').hide();
 
-        $('article').each(function() {
-          if ($(this).data('category') === $category) {
-            $(this).fadeIn();
-          }
-        });
+        $('article[data-category=\"'+ $category +'\"]').fadeIn();
     } else {
         $('article').hide();
-        $('article').each(function() {
-        if (!$(this).hasClass('template')) {
-          $(this).fadeIn();
-        }
-        });
+        $('article').not('template').fadeIn();
     }
-
     $('#author-filter').val('');
   });
 };
