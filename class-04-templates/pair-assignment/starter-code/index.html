@@ -22,6 +22,13 @@
         <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
+    <script id="filter" type="text/x-handlebars-template">
+      <li>
+        <select id="{{filter-id}}">
+          <option value="{{optionValue}}">{{optionValue}}</option>
+        </select>
+      </li>
+    </script>
   </head>
   <body>
     <header class="site-header clearfix">
@@ -57,7 +64,6 @@
             </li>
           </ul>
         </div>
-      <div id="blogArticles"></div>
       </section>
       <section id="about" class="tab-content">
         <header>

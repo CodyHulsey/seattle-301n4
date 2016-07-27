@@ -10,9 +10,7 @@ function Article (opts) {
 }
 
 Article.prototype.toHtml = function() {
-  // TODO: Use handlebars to render your articles.
-  //       - Get your template from the DOM.
-  //       - Now "compile" your template with Handlebars.
+
   var templateScript = $('#article-template').html();
 
   var theTemplate = Handlebars.compile(templateScript);
@@ -24,11 +22,7 @@ Article.prototype.toHtml = function() {
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
   this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
 
-  var theCompiledHtml = theTemplate(this);
-
-  // TODO: Use the function that Handlebars gave you to return your filled-in html template for THIS article.
-  $('#blogArticles').html(theCompiledHtml);
-
+  return theTemplate(this);
 };
 
 rawData.sort(function(a,b) {
