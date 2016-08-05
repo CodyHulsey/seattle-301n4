@@ -44,12 +44,12 @@ Article.loadAll = function(rawData) {
 // to execute once the loading of articles is done. We do this because we might want
 // to call other view functions, and not just this initIndexPage() that we are replacing.
 // Now, instead of calling articleView.initIndexPage(), we can simply run our callback.
-Article.fetchAll = function() {
+Article.fetchAll = function(callBack) {
   if (localStorage.rawData) {
     Article.loadAll(JSON.parse(localStorage.rawData));
     articleView.initIndexPage();
   } else {
-    $.getJSON('/data/hackerIpsum.json', function(rawData) {
+    $.getJSON('data/hackerIpsum.json', function(rawData) {
       Article.loadAll(rawData);
       localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
       articleView.initIndexPage();
@@ -59,25 +59,58 @@ Article.fetchAll = function() {
 
 // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
 Article.numWordsAll = function() {
-  return Article.all.map(function(article) {
-    return // Get the total number of words in this article
-  })
+    var test = Article.all.map(function(article) {
+      var tempArr = article.body.split(' ');// Get the total number of words in this article
+      return tempArr.length;
+      console.log(tempArr);
+    })
   .reduce(function(a, b) {
-    return // Sum up all the values in the collection
-  })
+    return a + b;// Sum up all the values in the collection
+  },0)
+  console.log(test);
 };
 
 // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
 Article.allAuthors = function() {
-  return // Don't forget to read the docs on map and reduce!
+  var test2 = Article.all.map(function(article) {
+    article.author;
+  })// Don't forget to read the docs on map and reduce!
+  .filter(function(article, index, arr) {
+    return arr.indexOf(article) === index;
+  })
+  console.log(test2);
 };
+
+Article.concatenateBodyByAuthor = function() {
+  var test3 = Article.all.map(function(article) {
+    return Article.all.author === this.authorName;
+  })
+    .map(function(authorArticle) {
+      return authorArticle.body;
+  })
+  .reduce(function(a, b) {
+    return a + b;
+  }, 0)
+  console.log(test3);
+}
 
 Article.numWordsByAuthor = function() {
   // TODO: Transform each author string into an object with 2 properties: One for
   // the author's name, and one for the total number of words across all articles written by the specified author.
   return Article.allAuthors().map(function(author) {
     return {
+            authorName: author,
+            wordsByAuthor: Article.concatenateBodyByAuthor().map(function(body) {
+              var tempArr = article.body.split(' ');
+              return tempArr.length;
+            })
+            .reduce(function(c, d) {
+              return c + d;
+            })
       // someKey: someValOrFunctionCall().map(...).reduce(...), ...
     }
   })
 };
+
+Article.allAuthors();
+Article.concatenateBodyByAuthor();

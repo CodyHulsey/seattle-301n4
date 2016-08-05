@@ -53,8 +53,8 @@ Article.fetchAll = function() {
   } else {
     $.getJSON('../data/ipsumArticles.json', function(data) {
       Article.loadAll(data);
-      localStorage.setItem('rawData', JSON.stringify(Article.all));
-      articleView.initIndexPage();
+      localStorage.setItem('rawData', JSON.stringify(Article.all)); //stringifies the rawData and sets it in localStorage.
+      articleView.initIndexPage(); //Prints to the page
     });
   }
 }
