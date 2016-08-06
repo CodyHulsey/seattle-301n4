@@ -9,13 +9,14 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
+
     <script id="article-template" type="text/x-handlebars-template">
-      <article data-author="{{author}}" data-category="{{category}}">
+      <article class="clearfix" data-author="{{author}}" data-category="{{category}}">
         <header>
           <h1>{{title}}</h1>
           <div class="byline">
             By <address><a href="{{authorUrl}}">{{author}}</a></address>
-            published <time pubdate datetime="{{publishedOn}}">{{publishStatus}}</time>
+            {{publishStatus}}
           </div>
         </header>
         <section class="article-body">{{{body}}}</section>
@@ -57,7 +58,6 @@
             </li>
           </ul>
         </div>
-      <div id="blogArticles"></div>
       </section>
       <section id="about" class="tab-content">
         <header>
@@ -74,14 +74,18 @@
       </section>
     </main>
     <footer>
-      &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
+      &copy; 2016 Code Fellows | Static Blog | Happy Ipsum!
     </footer>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- TODO: Include Handlebars.JS from a CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
-    <script src="scripts/blogArticles.js"></script>
+    <script src="vendor/scripts/jquery-2.1.4.js"></script>
+    <script src="vendor/scripts/handlebars.js"></script>
+    <script src="vendor/scripts/marked.js"></script>
     <script src="scripts/article.js"></script>
     <script src="scripts/articleView.js"></script>
+    <script>
+      // TODO: The fetchAll method call now requires a callback parameter.
+      // What do we want to run WHEN this method is done?
+      Article.fetchAll(articleView.initIndexPage()); // Add an argument to the function call.
+    </script>
   </body>
 </html>
