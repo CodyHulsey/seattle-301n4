@@ -1,116 +1,113 @@
-// TODO: Wrap the entire contents of this file in an IIFE.
+// DONE: Wrap the entire contents of this file in an IIFE.
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
-function Article (opts) {
-  this.author = opts.author;
-  this.authorUrl = opts.authorUrl;
-  this.title = opts.title;
-  this.category = opts.category;
-  this.body = opts.body;
-  this.publishedOn = opts.publishedOn;
-}
-
-Article.all = [];
-
-Article.prototype.toHtml = function() {
-  var template = Handlebars.compile($('#article-template').text());
-
-  this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
-  this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
-  this.body = marked(this.body);
-
-  return template(this);
-};
-
-Article.loadAll = function(rawData) {
-  rawData.sort(function(a,b) {
-    return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
-  });
-
-  // DONE: Refactor this forEach code, by using a `.map` call instead, since what we are trying to accomplish
-  // is the transformation of one colleciton into another.
-  // rawData.forEach(function(ele) {
-  //   Article.all.push(new Article(ele));
-  // })
-  Article.all = rawData.map(function(ele) {
-    return new Article(ele);
-  });
-};
-
-// This function will retrieve the data from either a local or remote source,
-// and process it, then hand off control to the View.
-
-// TODO: Refactor this function, and provide it with a parameter of a callback function
-//(for now just a placeholder, but to be referenced at call time as a view function)
-// to execute once the loading of articles is done. We do this because we might want
-// to call other view functions, and not just this initIndexPage() that we are replacing.
-// Now, instead of calling articleView.initIndexPage(), we can simply run our callback.
-Article.fetchAll = function(callBack) {
-  if (localStorage.rawData) {
-    Article.loadAll(JSON.parse(localStorage.rawData));
-    articleView.initIndexPage();
-  } else {
-    $.getJSON('data/hackerIpsum.json', function(rawData) {
-      Article.loadAll(rawData);
-      localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
-      articleView.initIndexPage();
-    });
+(function(module) {
+  function Article (opts) {
+    this.author = opts.author;
+    this.authorUrl = opts.authorUrl;
+    this.title = opts.title;
+    this.category = opts.category;
+    this.body = opts.body;
+    this.publishedOn = opts.publishedOn;
   }
-};
 
-// TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
-Article.numWordsAll = function() {
-    var test = Article.all.map(function(article) {
+  Article.all = [];
+
+  Article.prototype.toHtml = function() {
+    var template = Handlebars.compile($('#article-template').text());
+
+    this.daysAgo = parseInt((new Date() - new Date(this.publishedOn)) / 60 / 60 / 24 / 1000);
+    this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
+    this.body = marked(this.body);
+
+    return template(this);
+  };
+
+  Article.loadAll = function(rawData) {
+    rawData.sort(function(a,b) {
+      return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
+    });
+
+    // DONE: Refactor this forEach code, by using a `.map` call instead, since what we are trying to accomplish
+    // is the transformation of one colleciton into another.
+    // rawData.forEach(function(ele) {
+    //   Article.all.push(new Article(ele));
+    // })
+    Article.all = rawData.map(function(ele) {
+      return new Article(ele);
+    });
+  };
+
+  // This function will retrieve the data from either a local or remote source,
+  // and process it, then hand off control to the View.
+
+  // DONE: Refactor this function, and provide it with a parameter of a callback function
+  //(for now just a placeholder, but to be referenced at call time as a view function)
+  // to execute once the loading of articles is done. We do this because we might want
+  // to call other view functions, and not just this initIndexPage() that we are replacing.
+  // Now, instead of calling articleView.initIndexPage(), we can simply run our callback.
+  Article.fetchAll = function(callBack) {
+    if (localStorage.rawData) {
+      Article.loadAll(JSON.parse(localStorage.rawData));
+      callBack();
+      Article.numWordsByAuthor();
+    } else {
+      $done = $.getJSON('data/hackerIpsum.json', function(rawData) {
+        Article.loadAll(rawData);
+        localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
+        callBack();
+      }).done(function() {
+        Article.allAuthors();
+        Article.numWordsByAuthor();
+      });
+    }
+  };
+
+  // DONE: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
+  Article.numWordsAll = function() {
+    return Article.all.map(function(article) {
       var tempArr = article.body.split(' ');// Get the total number of words in this article
       return tempArr.length;
-      console.log(tempArr);
     })
-  .reduce(function(a, b) {
-    return a + b;// Sum up all the values in the collection
-  },0)
-  console.log(test);
-};
+    .reduce(function(a, b) {
+      return a + b;// Sum up all the values in the collection
+    },0);
+  };
 
-// TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
-Article.allAuthors = function() {
-  var test2 = Article.all.map(function(article) {
-    article.author;
-  })// Don't forget to read the docs on map and reduce!
-  .filter(function(article, index, arr) {
-    return arr.indexOf(article) === index;
-  })
-  console.log(test2);
-};
+  // DONE: Chain together a `map` and a `reduce` call to produce an array of unique author names.
+  Article.allAuthors = function() {
+    return Article.all.map(function(article) {
+      return article.author;
+    })// Don't forget to read the docs on map and reduce!
+    .filter(function(article, index, arr) {
+      return arr.indexOf(article) === index;
+    });
+  };
 
-Article.concatenateBodyByAuthor = function() {
-  var test3 = Article.all.map(function(article) {
-    return Article.all.author === this.authorName;
-  })
+  Article.getAuthorWords = function(author) {
+    return Article.all.filter(function(article) {
+      return article.author === author;
+    })
     .map(function(authorArticle) {
       return authorArticle.body;
-  })
-  .reduce(function(a, b) {
-    return a + b;
-  }, 0)
-  console.log(test3);
-}
+    })
+    .map(function(body) {
+      return body.split(' ').length;
+    })
+    .reduce(function(acc, b) {
+      return acc + b;
+    }, 0);
+  };
 
-Article.numWordsByAuthor = function() {
-  // TODO: Transform each author string into an object with 2 properties: One for
-  // the author's name, and one for the total number of words across all articles written by the specified author.
-  return Article.allAuthors().map(function(author) {
-    return {
-            authorName: author,
-            wordsByAuthor: Article.concatenateBodyByAuthor().map(function(body) {
-              var tempArr = article.body.split(' ');
-              return tempArr.length;
-            })
-            .reduce(function(c, d) {
-              return c + d;
-            })
-      // someKey: someValOrFunctionCall().map(...).reduce(...), ...
-    }
-  })
-};
+  Article.numWordsByAuthor = function() {
+    // DONE: Transform each author string into an object with 2 properties: One for
+    // the author's name, and one for the total number of words across all articles written by the specified author.
+    return Article.allAuthors().map(function(author) {
+      return {
+        name: author,
+        numWords: Article.getAuthorWords(author)
+      };
+    });
+  };
 
-Article.allAuthors();
-Article.concatenateBodyByAuthor();
+  module.Article = Article;
+})(window);

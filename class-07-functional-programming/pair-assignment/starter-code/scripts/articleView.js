@@ -48,7 +48,7 @@
   };
 
   articleView.handleMainNav = function() {
-    $('.main-nav').on('click', '.tab', function(e) {
+    $('.main-nav').on('click', '.tab', function() {
       $('.tab-content').hide();
       $('#' + $(this).data('content')).fadeIn();
     });
@@ -57,7 +57,7 @@
   };
 
   articleView.toggleNavDisplay = function() {
-    $('.icon-menu').on('click', function(e) {
+    $('.icon-menu').on('click', function() {
       $('.main-nav ul').toggle();
     });
   };
@@ -109,7 +109,7 @@
 
   articleView.initIndexPage = function() {
     Article.all.forEach(function(a){
-      $('#articles').append(a.toHtml())
+      $('#articles').append(a.toHtml());
     });
     Article.numWordsAll();
     articleView.populateFilters();
@@ -121,15 +121,14 @@
   };
 
   articleView.initAdminPage = function() {
-    // TODO: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
-    var template = Handlebars.compile();
-
+    // DONE: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
+    var template = Handlebars.compile($('#author-template').text());
     // DONE: We use `forEach` here because we are relying on the side-effects of the callback function:
     // appending to the DOM.
     // The callback is not required to return anything.
     Article.numWordsByAuthor().forEach(function(stat) {
       $('.author-stats').append(template(stat));
-    })
+    });
 
     // DONE: Simply write the correct values to the page:
     $('#blog-stats .articles').text(Article.all.length);
