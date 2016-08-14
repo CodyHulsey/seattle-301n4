@@ -16,7 +16,7 @@
       <section>
         <form>
           <label for="zip">Select a Zip</label>
-          <input type="text" name="zip">
+          <input type="text" name="zip" pattern="\d{5}" value="">
           <input type="submit" value="Search">
         </form>
       </section>
@@ -36,13 +36,17 @@
     </main>
 
     <script type="text/javascript" src='scripts/webdb.js'></script>
+    <script type="text/javascript" src='scripts/map.js'></script>
     <script type="text/javascript" src='scripts/search.js'></script>
     <script type="text/javascript" src='scripts/loadDB.js'></script>
-    <script type="text/javascript" src='scripts/map.js'></script>
-    <!-- TODO: Create an API Key (linked in the README) and populate the script below where it says 'API_KEY_HERE'-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=API_KEY_HERE&callback=initMap" async defer></script>
+    <!-- DONE: Create an API Key (linked in the README) and populate the script below where it says 'API_KEY_HERE'-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-nZC06Zv8x2R3B3TiF_T8NJ27fC-T3R4&callback=initMap" async defer></script>
     <script type="text/javascript">
       zips.loadDB();
+      zipsView.populateStatesFilter();
+      zipsView.getUserState();
+      zipsView.getUserZip();
+      zipsView.getCityData();
     </script>
   </body>
 </html>

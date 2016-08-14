@@ -32,7 +32,7 @@
       if (rows.length) {
         return;
       } else {
-        $.get('/data/zips.json')
+        $.get('data/zips.json')
         .done(function(data) {
           data.forEach(function(ele) {
             webDB.execute(
