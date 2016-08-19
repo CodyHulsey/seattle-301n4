@@ -1,5 +1,5 @@
 {
-  "name": "mvc-blog",
+  "name": "y",
   "version": "1.0.0",
   "description": "As we now complete our MVC conversation, we can refactor our app to use good MVC separation of concerns.",
   "main": "server.js",
@@ -10,8 +10,9 @@
   "author": "Code Fellows",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.13.3",
+    "express": "^4.14.0",
     "express-request-proxy": "^1.0.10"
   },
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {}
 }
