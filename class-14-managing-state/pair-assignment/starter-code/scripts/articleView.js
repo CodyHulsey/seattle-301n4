@@ -13,6 +13,7 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // ANSWER: This method populates the filters. In Article.allAuthors() we are looping through an array of all authors and creating a new array of templated versions of each author by using map(). We are then checking to see what the length of the author filter option element and if it's less than 2, then it's going to append that array of options to the author filter. Then it's calling Article.allCategories and checking to see if the category options are less than 2, if thy are less than 2, then we are appending each option to the categories filter element in the DOM.
   articleView.populateFilters = function() {
     var options,
       template = Handlebars.compile($('#option-template').text());
@@ -38,6 +39,7 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // ANSWER: This is handling the filters in the DOM. .one() is simliar to .on() but only runs once. It's essentially creating the route when the user changes one of the filters. It's replacing the '-filter' with a blank space and then assigning that id to resource. Then assigning the value of that option element the end point for the file path. It's basically creating route for us.
   articleView.handleFilters = function() {
     $('#filters').one('change', 'select', function() {
       resource = this.id.replace('-filter', '');
@@ -124,6 +126,7 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // ANSWER: This method is showing the articles section, and hiding all of it's siblings. Then removing all articles from the articles section, and then looping over whatever articles get passed in as the argument. Then templating and appending to the DOM. Then populating the filters and calls the articleView.handleFilters which is the .one() event listener. 
   articleView.index = function(articles) {
     $('#articles').show().siblings().hide();
 
@@ -134,6 +137,7 @@
 
     articleView.populateFilters();
     // COMMENT: What does this method do?  What is it's execution path?
+    // ANSWER: See above. Line 42.
     articleView.handleFilters();
 
     // DONE: Replace setTeasers with just the truncation logic, if needed:
